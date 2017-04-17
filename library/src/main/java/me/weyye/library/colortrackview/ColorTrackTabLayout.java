@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -89,10 +88,10 @@ public class ColorTrackTabLayout extends TabLayout {
             setSelectedView(position);
         }
 
-        measureTabWidth(position, colorTrackView);
+        setTabWidth(position, colorTrackView);
     }
 
-    private void measureTabWidth(int position, ColorTrackView colorTrackView) {
+    private void setTabWidth(int position, ColorTrackView colorTrackView) {
         ViewGroup slidingTabStrip = (ViewGroup) getChildAt(0);
         ViewGroup tabView = (ViewGroup) slidingTabStrip.getChildAt(position);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -193,9 +192,6 @@ public class ColorTrackTabLayout extends TabLayout {
             if (tabLayout == null) return;
             final boolean updateText = mScrollState != SCROLL_STATE_SETTLING ||
                     mPreviousScrollState == SCROLL_STATE_DRAGGING;
-            boolean b = mScrollState != SCROLL_STATE_SETTLING;
-            boolean b1 = mPreviousScrollState == SCROLL_STATE_DRAGGING;
-            Log.i("tag", "onPageScrolled:" + ",updateText:" + updateText + ",mScrollState:" + b + ",mPreviousScrollState:" + b1);
             if (updateText) {
                 tabLayout.tabScrolled(position, positionOffset);
             }

@@ -1,5 +1,9 @@
 # ColorTrackTabLayout
 一个自适应Tab宽度，可以滑动文字逐渐变色的`TabLayout`,该控件继承自TabLayout做了一些扩展。
+
+# Blog
+[自适应Tab宽度可以滑动文字逐渐变色的TabLayout](http://www.jianshu.com/p/4ab5e09a30e8)
+
 # 效果
 
 ![](/screenshot/screenshot.gif)
@@ -7,8 +11,8 @@
 # Sample
 使用方法跟`TabLayout`一模一样
 ``` java
-		titles = new String[]{"推荐", "视频", "社会"};
-		final List<Fragment> fragments = new ArrayList<>();
+        titles = new String[]{"推荐", "视频", "社会"};
+        final List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             fragments.add(MyFragment.newInstance());
         }
