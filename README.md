@@ -15,12 +15,12 @@ Use Gradle:
 
 Or Maven:
 
-><dependency>
->  <groupId>me.weyye.ColorTrackTabLayout</groupId>
->  <artifactId>library</artifactId>
->  <version>1.0.1</version>
->  <type>pom</type>
-></dependency>
+    <dependency>
+      <groupId>me.weyye.ColorTrackTabLayout</groupId>
+      <artifactId>library</artifactId>
+      <version>1.0.1</version>
+      <type>pom</type>
+    </dependency>
 
 # Sample
 使用方法跟`TabLayout`一模一样
