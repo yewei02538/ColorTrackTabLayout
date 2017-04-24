@@ -15,6 +15,10 @@ public class TodayNewsAcitivty extends BaseActivity {
         mTab.setTabPaddingLeftAndRight(20, 20);
         mTab.setSelectedTabIndicatorHeight(0);
         super.initTab();
+        //默认选中第5个
+        mTab.setLastSelectedTabPosition(4);
+        //移动到第5个
+        mTab.setCurrentItem(4);
         mViewPager.setOffscreenPageLimit(titles.length);
     }
 }

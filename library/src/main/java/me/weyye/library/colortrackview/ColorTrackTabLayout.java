@@ -26,7 +26,14 @@ public class ColorTrackTabLayout extends TabLayout {
     private int mTabTextSize;
     private int mTabSelectedTextColor;
     private int mTabTextColor;
+    private static final int INVALID_TAB_POS = -1;
+    /*
+    * 最后选中的postition
+    */
+    private int mLastSelectedTabPosition = INVALID_TAB_POS;
+
     private ColorTrackTabLayoutOnPageChangeListener mPageChangeListenter;
+    private ViewPager mViewPager;
 
 
     public ColorTrackTabLayout(Context context) {
@@ -83,8 +90,8 @@ public class ColorTrackTabLayout extends TabLayout {
         tab.setCustomView(colorTrackView);
 
         super.addTab(tab, position, setSelected);
-        if (position == 0) {
-            //默认选中第一个
+        int selectedTabPosition = getSelectedTabPosition();
+        if ((selectedTabPosition == INVALID_TAB_POS && position == 0) || (selectedTabPosition == position)) {
             setSelectedView(position);
         }
 
@@ -133,6 +140,8 @@ public class ColorTrackTabLayout extends TabLayout {
     public void setupWithViewPager(@Nullable ViewPager viewPager, boolean autoRefresh) {
         super.setupWithViewPager(viewPager, autoRefresh);
         try {
+            if (viewPager != null)
+                mViewPager = viewPager;
             //通过反射找到mPageChangeListener
             Field field = TabLayout.class.getDeclaredField("mPageChangeListener");
             field.setAccessible(true);
@@ -201,7 +210,7 @@ public class ColorTrackTabLayout extends TabLayout {
         public void onPageSelected(int position) {
             super.onPageSelected(position);
             ColorTrackTabLayout tabLayout = mTabLayoutRef.get();
-            mPreviousScrollState=SCROLL_STATE_SETTLING;
+            mPreviousScrollState = SCROLL_STATE_SETTLING;
             tabLayout.setSelectedView(position);
         }
 
@@ -219,5 +228,29 @@ public class ColorTrackTabLayout extends TabLayout {
                 getColorTrackView(i).setProgress(i == position ? 1 : 0);
             }
         }
+    }
+
+    @Override
+    public void removeAllTabs() {
+        // Retain last selected position before removing all tabs
+        mLastSelectedTabPosition = getSelectedTabPosition();
+        super.removeAllTabs();
+    }
+
+    @Override
+    public int getSelectedTabPosition() {
+        // Override selected tab position to return your last selected tab position
+        final int selectedTabPositionAtParent = super.getSelectedTabPosition();
+        return selectedTabPositionAtParent == INVALID_TAB_POS ?
+                mLastSelectedTabPosition : selectedTabPositionAtParent;
+    }
+
+    public void setLastSelectedTabPosition(int lastSelectedTabPosition) {
+        mLastSelectedTabPosition = lastSelectedTabPosition;
+    }
+
+    public void setCurrentItem(int position) {
+        if (mViewPager != null)
+            mViewPager.setCurrentItem(position);
     }
 }
